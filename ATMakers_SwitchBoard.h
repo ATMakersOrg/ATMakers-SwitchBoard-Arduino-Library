@@ -15,6 +15,7 @@
 #include <Adafruit_MCP23017.h>
 #include <Adafruit_INA219.h>
 
+#define CURRENT_SENSOR_DELAY 10
 
 int setMap[] = {-1,7,5,3,15,13};
 int resetMap[] = {-1,6,4,2,14,12};
@@ -23,8 +24,8 @@ int resetMap[] = {-1,6,4,2,14,12};
 class ATMakers_SwitchBoard : public Adafruit_MCP23017, public Adafruit_INA219{
 public:
 	
-	inline void relaySet(int relay) { digitalWrite(setMap[relay], HIGH); delay(10); digitalWrite(setMap[relay], LOW);}
-	inline void relayReset(int relay) { digitalWrite(resetMap[relay], HIGH); delay(10);digitalWrite(resetMap[relay], LOW);}
+	inline void relaySet(int relay) { digitalWrite(setMap[relay], HIGH); delay(CURRENT_SENSOR_DELAY); digitalWrite(setMap[relay], LOW);}
+	inline void relayReset(int relay) { digitalWrite(resetMap[relay], HIGH); delay(CURRENT_SENSOR_DELAY);digitalWrite(resetMap[relay], LOW);}
 	
 	boolean currentSensorActive(float thresholdMA=1.0);
 	
