@@ -16,23 +16,31 @@
 #include <Adafruit_INA219.h>
 
 #define CURRENT_SENSOR_DELAY 10
+#define RELAY_CHANGE_DELAY 10
 
-int setMap[] = {-1,7,5,3,15,13};
-int resetMap[] = {-1,6,4,2,14,12};
 
 	 
-class ATMakers_SwitchBoard : public Adafruit_MCP23017, public Adafruit_INA219{
-public:
-	
-	inline void relaySet(int relay) { digitalWrite(setMap[relay], HIGH); delay(CURRENT_SENSOR_DELAY); digitalWrite(setMap[relay], LOW);}
-	inline void relayReset(int relay) { digitalWrite(resetMap[relay], HIGH); delay(CURRENT_SENSOR_DELAY);digitalWrite(resetMap[relay], LOW);}
-	
-	boolean currentSensorActive(float thresholdMA=1.0);
-	
-private:
+class ATMakers_SwitchBoard {
+  Adafruit_MCP23017 portExpander;
+  Adafruit_INA219 currentSensor;
+  const int setMap[6] = {-1,7,5,3,15,13};
+  const int resetMap[6] = {-1,6,4,2,14,12};
+  float currLimit = 1.0;
+public:  
+  ATMakers_SwitchBoard(uint8_t addr=0x00, float limit = 1.0);
+	void relaySet(int relay);
+	void relayReset(int relay);
 
+  void pinMode(uint8_t p, uint8_t d);
+  void digitalWrite(uint8_t pin, uint8_t d);
+  void pullUp(uint8_t p, uint8_t d);
+  uint8_t digitalRead(uint8_t pin);
 
-
+  boolean isExtraPin(uint8_t p);
+  
+  boolean currentSensorActive(float currLimit);
+  boolean currentSensorActive();
+  
 };
 
 
