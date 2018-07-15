@@ -30,6 +30,7 @@ public:
   ATMakers_SwitchBoard(uint8_t addr=0x00, float limit = 1.0);
 	void relaySet(int relay);
 	void relayReset(int relay);
+	void resetAll();
 
   void pinMode(uint8_t p, uint8_t d);
   void digitalWrite(uint8_t pin, uint8_t d);

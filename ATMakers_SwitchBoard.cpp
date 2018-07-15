@@ -13,10 +13,21 @@
 
 ATMakers_SwitchBoard::ATMakers_SwitchBoard(uint8_t addr, float limit):currentSensor(addr), currLimit(limit)
 {
-  currentSensor.begin(addr);
+	//strangely these two sensors intialize differently...
+	//The Current Sensor wants the full i2c address
+  currentSensor.begin(INA219_ADDRESS | addr);
+	//and the port exander wants just the last three bits
   portExpander.begin(addr);  
 }
 
+void ATMakers_SwitchBoard::resetAll()
+{
+	relayReset(0);
+	relayReset(1);
+	relayReset(2);
+	relayReset(3);
+	relayReset(4);
+}
 void ATMakers_SwitchBoard::relaySet(int relay)
 { 
   portExpander.digitalWrite(setMap[relay], HIGH); 
