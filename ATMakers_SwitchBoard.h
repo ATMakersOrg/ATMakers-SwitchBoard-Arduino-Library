@@ -11,23 +11,25 @@
 
 #ifndef _ATMAKERS_SWITCHBOARD_H_
 #define _ATMAKERS_SWITCHBOARD_H_
-
+#include <Wire.h>
 #include <Adafruit_MCP23017.h>
 #include <Adafruit_INA219.h>
 
-#define CURRENT_SENSOR_DELAY 10
-#define RELAY_CHANGE_DELAY 10
+#define CURRENT_SENSOR_DELAY 20
+#define RELAY_CHANGE_DELAY 20
 
 
 	 
 class ATMakers_SwitchBoard {
   Adafruit_MCP23017 portExpander;
   Adafruit_INA219 currentSensor;
-  const int setMap[6] = {-1,7,5,3,15,13};
-  const int resetMap[6] = {-1,6,4,2,14,12};
+  const int setMap[6] = {-1,0,1,2,3,4};
+  const int resetMap[6] = {-1,8,9,10,11,12};
   float currLimit = 1.0;
+  uint8_t addr = 0x00;
 public:  
-  ATMakers_SwitchBoard(uint8_t addr=0x00, float limit = 1.0);
+//  ATMakers_SwitchBoard(uint8_t addr=0x00, float limit = 1.0);
+  void begin();
 	void relaySet(int relay);
 	void relayReset(int relay);
 	void resetAll();
