@@ -1,0 +1,27 @@
+#######################################
+# Syntax Coloring Map for MCP23017
+#######################################
+
+#######################################
+# Datatypes (KEYWORD1)
+#######################################
+
+ATMakers_SwitchBoard  KEYWORD1
+
+#######################################
+# Methods and Functions (KEYWORD2)
+#######################################
+
+relaySet		KEYWORD2
+relayReset	KEYWORD2
+resetAll		KEYWORD2
+isExtraPin	KEYWORD2
+cs_report		KEYWORD2
+currentSensorActive		KEYWORD2
+currentSensorReport		KEYWORD2
+getSupplyVoltage_V		KEYWORD2
+getLoadVoltage_V			KEYWORD2
+
+#######################################
+# Constants (LITERAL1)
+#######################################
