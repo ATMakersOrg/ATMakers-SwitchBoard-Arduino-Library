@@ -1,5 +1,4 @@
 #include "ATMakers_SwitchBoard.h"
-#include <Streaming.h>
 
  /***************************************************
   This is a library for the ATMakers SwitchBoard Feather Wing
