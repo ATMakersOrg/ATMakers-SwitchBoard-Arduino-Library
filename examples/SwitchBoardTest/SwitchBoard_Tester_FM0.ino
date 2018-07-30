@@ -29,10 +29,10 @@ void setup() {
 }
 
 void loop() {
-  ATMakers_SwitchBoard::cs_report report;
+  ATMakers_SwitchBoard::CS_Data report;
   for (int threshold=3 ; threshold <= 24 ; threshold+=3) {
     Serial << "Setting threshold to " << threshold << endl;
-    sboard.currentSensorActive(threshold);
+    sboard.currentThreshold(threshold);
     for (int set=1 ; set>=0 ; set--) {
       for (int relay=1; relay <=5; relay++) {
         String mode = (set) ? "Setting" : "Resetting";
@@ -40,14 +40,13 @@ void loop() {
         (set) ? sboard.relaySet(relay) : sboard.relayReset(relay);
         delay(INTERSET_ms);
       }
-      report = sboard.currentSensorReport();
+      sboard.getCurrentSensorData(report);
       Serial << "Data: source="<< report.supplyvoltage_V << "V"
         << " shunt=" << report.shuntvoltage_mV << "mV"
         << " load="  << report.loadvoltage_V << "V"
         << " current=" << report.current_mA << "mA"
         << " active=" << report.current_active
         << endl;
-      report = sboard.currentSensorReport(true);
       delay(INTRASET_ms);
     }
     delay(4000);

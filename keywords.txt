@@ -21,6 +21,7 @@ currentSensorActive		KEYWORD2
 currentSensorReport		KEYWORD2
 getSupplyVoltage_V		KEYWORD2
 getLoadVoltage_V			KEYWORD2
+currentThreshold			KEYWORD2
 
 #######################################
 # Constants (LITERAL1)

@@ -20,8 +20,6 @@ void ATMakers_SwitchBoard::begin(float p_current_Threshold_mA, uint8_t board_add
   //strangely these two sensors initialize differently...
   //The Current Sensor wants the full i2c address
   currentSensor.begin(INA219_ADDRESS | board_addr);
-  // FIXME - below board ratings - let user scale settings
-  // FIXME was currentSensor.setCalibration_16V_400mA();
   //and the port expander wants just the last three bits
   portExpander.begin(board_addr);
 
@@ -60,60 +58,24 @@ void ATMakers_SwitchBoard::relayReset(int relay)
   portExpander.digitalWrite(resetMap[relay], LOW);
 }
 
-/* FIXME - was
-boolean ATMakers_SwitchBoard::currentSensorActive(float limit)
-{
-  float shuntvoltage_mV = currentSensor.getShuntVoltage_mV();
-  float busvoltage_V    = currentSensor.getBusVoltage_V();
-  float current_mA      = currentSensor.getCurrent_mA();
-  float loadvoltage_V   = busvoltage_V + (shuntvoltage_mV / 1000.0);
-
-  Serial.print("Bus Voltage:   "); Serial.print(busvoltage_V); Serial.println(" V");
-  Serial.print("Shunt Voltage: "); Serial.print(shuntvoltage_mV); Serial.println(" mV");
-  Serial.print("Load Voltage:  "); Serial.print(loadvoltage_V); Serial.println(" V");
-  Serial.print("Current:       "); Serial.print(current_mA); Serial.println(" mA");
-  Serial.println("");
-
-  return false;
-}
-*/
-
-boolean ATMakers_SwitchBoard::currentSensorActive(float p_current_Threshold_mA) //=-1
-{
-  if (p_current_Threshold_mA >= 0) currentThreshold_mA = p_current_Threshold_mA; // set threshold on good value
- 
-  float loadvoltage_V   = getLoadVoltage_V();
-  float shuntvoltage_mV = currentSensor.getShuntVoltage_mV();
-  float supplyvoltage_V = loadvoltage_V + (shuntvoltage_mV / 1000.0);
-  float current_mA      = currentSensor.getCurrent_mA();
-
-  Serial.print("Supply Voltage:"); Serial.print(supplyvoltage_V); Serial.println(" V");
-  Serial.print("Shunt Voltage: "); Serial.print(shuntvoltage_mV); Serial.println(" mV");
-  Serial.print("Load Voltage:  "); Serial.print(loadvoltage_V); Serial.println(" V");
-  Serial.print("Current:       "); Serial.print(current_mA); Serial.println(" mA");
-  Serial.println("");
-  return (current_mA > currentThreshold_mA);
+float ATMakers_SwitchBoard::currentThreshold(float new_threshold_mA) {
+  float oldval = currentThreshold_mA;
+  currentThreshold_mA = new_threshold_mA;
+  return oldval;
 }
 
-ATMakers_SwitchBoard::cs_report ATMakers_SwitchBoard::currentSensorReport( bool print )
+boolean ATMakers_SwitchBoard::currentSensorActive(void)
 {
-  cs_report report;
+  return (currentSensor.getCurrent_mA() > currentThreshold_mA);
+}
+
+void ATMakers_SwitchBoard::getCurrentSensorData(CS_Data& report)
+{
   report.shuntvoltage_mV = currentSensor.getShuntVoltage_mV();
   report.loadvoltage_V   = getLoadVoltage_V();
   report.supplyvoltage_V = report.loadvoltage_V + (report.shuntvoltage_mV/1000.0);
   report.current_mA      = currentSensor.getCurrent_mA();
   report.current_active  = (report.current_mA > currentThreshold_mA);
-  if (!print) return report;
-
-  String active = (report.current_active) ? "Active" : "not active";
-  Serial
-         << "Supply Voltage: " << report.supplyvoltage_V << " V"  << endl
-         << "Shunt Voltage:  " << report.shuntvoltage_mV << " mV" << endl
-         << "Load Voltage:   " << report.loadvoltage_V << " V"    << endl
-         << "Current:        " << report.current_mA << " mA"      << endl
-         << "Current active: " << active << endl
-         << endl;
-  return report; // using "Return Value Optimization"
 }
 
 boolean ATMakers_SwitchBoard::isExtraPin(uint8_t p){

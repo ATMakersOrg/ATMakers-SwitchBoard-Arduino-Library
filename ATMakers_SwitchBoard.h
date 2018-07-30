@@ -25,13 +25,14 @@ private:
   const int setMap[6]   = {-1,0,1,2,3,4};
   const int resetMap[6] = {-1,8,9,10,11,12};
   float currentThreshold_mA;
-//  uint8_t addr = 0x00;  FIXME - using parameter now
 public:  
-//  ATMakers_SwitchBoard(uint8_t addr=0x00, float limit = 1.0);
   void begin(float currThreshold_mA=1.0, uint8_t board_addr=0); // 0-3 depending on A1,A0 mods. Masked to 2 ls-bits
   void relaySet(int relay);
   void relayReset(int relay);
   void resetAll();
+  
+  float currentThreshold(void) { return currentThreshold_mA; };   // get the existing current threshold (mA)
+  float currentThreshold(float new_threshold_mA); // set a new current threshold, returns the old setting
 
   void pinMode(uint8_t p, uint8_t d);
   void digitalWrite(uint8_t pin, uint8_t d);
@@ -39,11 +40,10 @@ public:
   uint8_t digitalRead(uint8_t pin);
 
   boolean isExtraPin(uint8_t p);
-  boolean currentSensorActive(float current_threshold_mA=-1);
+  boolean currentSensorActive(void);
 
   // current sensor report structure
-  class cs_report {
-   public:
+  struct CS_Data {
     float supplyvoltage_V;
     float shuntvoltage_mV;
     float loadvoltage_V;
@@ -51,7 +51,7 @@ public:
     bool  current_active;
   };
 
-  cs_report currentSensorReport( bool print=false );
+  void getCurrentSensorData(CS_Data& report);
 
   // expose INA219 methods
   inline void  setCalibration_32V_2A   (void) { currentSensor.setCalibration_32V_2A(); } 
