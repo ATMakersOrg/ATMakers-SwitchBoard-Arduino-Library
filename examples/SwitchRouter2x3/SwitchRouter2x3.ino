@@ -35,7 +35,7 @@ float currentLimits[NUM_CONFIGS];
 /*Frequencies*/
 float frequencies[] = {262, 330, 392, 523, 659, 784};
 
-/*Declar the switchboard - could pass in address info*/
+/*Declare the switchboard - could pass in address info*/
 ATMakers_SwitchBoard switchBoard;
 
 void setup() {
