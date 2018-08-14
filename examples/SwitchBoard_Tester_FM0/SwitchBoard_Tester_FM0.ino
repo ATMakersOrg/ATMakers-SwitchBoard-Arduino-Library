@@ -11,12 +11,6 @@
 
 ATMakers_SwitchBoard sboard;
 
-// INA219 current sense, initialized with 32V_2A calibration
-const float LOW_RES_HIGH_CURRENT_MAX = 3.2;
-const float LOW_RES_LOW_CURRENT_MAX  = 1.0;
-const float HIGH_RES_VOLTAGE_MAX = 16.0;
-const float HIGH_RES_CURRENT_MAX = 0.400;
-
 void setup() {
   Serial.begin(9600);
   for (int s=5 ; s > 0 ; s--) {
@@ -41,10 +35,10 @@ void loop() {
         delay(INTERSET_ms);
       }
       sboard.getCurrentSensorData(report);
-      Serial << "Data: source="<< report.supplyvoltage_V << "V"
-        << " shunt=" << report.shuntvoltage_mV << "mV"
-        << " load="  << report.loadvoltage_V << "V"
-        << " current=" << report.current_mA << "mA"
+      Serial << "Data: source="<< _FLOAT(report.supplyvoltage_V,3) << "V"
+        << " shunt=" << _FLOAT(report.shuntvoltage_mV,3) << "mV"
+        << " load="  << _FLOAT(report.loadvoltage_V,3) << "V"
+        << " current=" << _FLOAT(report.current_mA,3) << "mA"
         << " active=" << report.current_active
         << endl;
       delay(INTRASET_ms);
