@@ -19,7 +19,15 @@ void ATMakers_SwitchBoard::begin(float p_current_Threshold_mA, uint8_t board_add
   board_addr &= 0b0011; // mask to A1 A0
   //strangely these two sensors initialize differently...
   //The Current Sensor wants the full i2c address
+#ifdef _LIB_ADAFRUIT_INA219_
+  // new lib v1.03 - we need a better trigger ... like a version
+  _i2c = &Wire;
+  _i2c->begin(INA219_ADDRESS | CS_AddrMap[board_addr]);
+  currentSensor.begin(_i2c);
+#else
+  // old library <= v1.02
   currentSensor.begin(INA219_ADDRESS | CS_AddrMap[board_addr]);
+#endif
   //and the port expander wants just the last three bits
   portExpander.begin(board_addr);
 

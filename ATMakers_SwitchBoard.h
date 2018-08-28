@@ -22,6 +22,7 @@ class ATMakers_SwitchBoard {
 private:
   Adafruit_MCP23017 portExpander;
   Adafruit_INA219   currentSensor;
+  TwoWire* _i2c;
   const int setMap[6]   = {-1,0,1,2,3,4};
   const int resetMap[6] = {-1,8,9,10,11,12};
   float currentThreshold_mA;
