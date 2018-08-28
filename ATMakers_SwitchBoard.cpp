@@ -15,7 +15,7 @@ int CS_AddrMap [] = {0b000, 0b001, 0b100, 0b101};
 
 void ATMakers_SwitchBoard::begin(float p_current_Threshold_mA, uint8_t board_addr)
 {
-  currentThreshold_mA = p_current_Threshold_mA;
+	currentThreshold_mA = p_current_Threshold_mA;
   board_addr &= 0b0011; // mask to A1 A0
   //strangely these two sensors initialize differently...
   //The Current Sensor wants the full i2c address
@@ -99,7 +99,7 @@ boolean ATMakers_SwitchBoard::isExtraPin(uint8_t p){
 
 
 void ATMakers_SwitchBoard::pinMode(uint8_t p, uint8_t d) {
-  if (isExtraPin(p))
+	if (isExtraPin(p))
   {
     portExpander.pinMode(p, d);
   }
