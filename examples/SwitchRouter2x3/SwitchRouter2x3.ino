@@ -126,6 +126,7 @@ void loop() {
         Serial.println("Button Released (short)");
         buttonPressed = false;
         nextConfig(); //switch to the next configuration
+        delay(500);//button needs to release
       }
     }
 
@@ -200,4 +201,3 @@ void nextConfig()
   }
   tone(SPEAKER_PIN, frequencies[activeConfig], 500);
 }
-
