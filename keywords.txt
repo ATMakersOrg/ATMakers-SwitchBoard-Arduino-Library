@@ -12,21 +12,21 @@ ATMakers_SwitchBoard	KEYWORD1
 # Methods and Functions (KEYWORD2)
 #######################################
 
-relaySet		KEYWORD2
+relaySet	KEYWORD2
 relayReset	KEYWORD2
-resetAll		KEYWORD2
+resetAll	KEYWORD2
 isExtraPin	KEYWORD2
-cs_report		KEYWORD2
-pinMode			KEYWORD2
-pullUp			KEYWORD2
+cs_report	KEYWORD2
+pinMode	KEYWORD2
+pullUp	KEYWORD2
 isExtraPin	KEYWORD2
-CS_Data			KEYWORD2
-currentThreshold			HEYWORD2
-currentSensorActive		KEYWORD2
+CS_Data	KEYWORD2
+currentThreshold	KEYWORD2
+currentSensorActive	KEYWORD2
 getCurrentSensorData	KEYWORD2
-getSupplyVoltage_V		KEYWORD2
-getLoadVoltage_V			KEYWORD2
-currentThreshold			KEYWORD2
+getSupplyVoltage_V	KEYWORD2
+getLoadVoltage_V	KEYWORD2
+currentThreshold	KEYWORD2
 
 #######################################
 # Constants (LITERAL1)
