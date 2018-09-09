@@ -21,7 +21,7 @@ pinMode			KEYWORD2
 pullUp			KEYWORD2
 isExtraPin	KEYWORD2
 CS_Data			KEYWORD2
-currentThreshold			HEYWORD2
+currentThreshold			KEYWORD2
 currentSensorActive		KEYWORD2
 getCurrentSensorData	KEYWORD2
 getSupplyVoltage_V		KEYWORD2
